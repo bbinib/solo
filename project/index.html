@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>지구온난화 국가별 데이터 지구본</title>
+    <link rel="stylesheet" href="./src/style.css?v=20260610-2" />
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.45.3/dist/globe.gl.min.js"></script>
+</head>
+<body>
+    <main id="app">
+        <div id="globe"></div>
+
+        <section id="panel">
+            <p class="eyebrow">Climate Data</p>
+            <h1 id="countryName">나라를 클릭하세요</h1>
+
+            <div class="metric">
+                <span>온도 상승폭</span>
+                <strong id="tempValue">-</strong>
+            </div>
+
+            <div class="metric">
+                <span>전 지구 평균 해수면 상승</span>
+                <strong id="seaValue">-</strong>
+            </div>
+
+            <div class="chart-block">
+                <h2>온도 상승 변화</h2>
+                <svg id="tempChart"></svg>
+            </div>
+
+            <div class="chart-block">
+                <h2>해수면 상승 변화</h2>
+                <svg id="seaChart"></svg>
+            </div>
+
+            <div class="top-countries">
+                <h2>온도 상승 TOP 5</h2>
+                <ol id="topCountriesList"></ol>
+            </div>
+
+            <p class="source">
+                온도는 World Bank CCKP의 CRU TS 4.07 국가별 연평균 기온을 1901-1930 평균 대비 상승폭으로 계산했습니다.
+                해수면은 NASA 기반 전 지구 평균 해수면 자료를 1993년 기준 상승폭으로 표시합니다.
+            </p>
+
+            <div class="source-links">
+                <a href="https://climateknowledgeportal.worldbank.org/download-data" target="_blank" rel="noopener noreferrer">World Bank CCKP</a>
+                <a href="https://sealevel.nasa.gov/" target="_blank" rel="noopener noreferrer">NASA Sea Level</a>
+            </div>
+        </section>
+
+        <div id="legend">
+            <span>낮음</span>
+            <div class="legend-bar"></div>
+            <span>높음</span>
+        </div>
+
+        <div id="yearControl">
+            <div class="year-header">
+                <span>Year</span>
+                <strong id="yearValue">2022</strong>
+            </div>
+            <input id="yearSlider" type="range" min="0" max="4" step="1" value="4" />
+            <div class="year-marks">
+                <span>1993</span>
+                <span>2000</span>
+                <span>2010</span>
+                <span>2020</span>
+                <span>2022</span>
+            </div>
+            <div class="playback-row">
+                <button id="playYears" type="button">재생</button>
+                <button id="pauseYears" type="button">정지</button>
+            </div>
+        </div>
+
+        <div id="regionControl">
+            <label for="regionFilter">지역 필터</label>
+            <select id="regionFilter">
+                <option value="all">전체 지역</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Americas">Americas</option>
+                <option value="Africa">Africa</option>
+                <option value="Oceania">Oceania</option>
+            </select>
+        </div>
+
+        <form id="searchControl" autocomplete="off">
+            <label for="countrySearch">국가 검색</label>
+            <div class="search-row">
+                <input id="countrySearch" type="search" list="countryOptions" placeholder="예: China, Korea" />
+                <button type="submit">이동</button>
+                <button id="resetView" type="button">초기화</button>
+            </div>
+            <datalist id="countryOptions"></datalist>
+            <p id="searchStatus">CSV 데이터가 있는 국가만 검색됩니다.</p>
+        </form>
+
+        <div class="hint">
+            드래그: 지구 회전 / 휠: 확대·축소 / 국가 클릭: 데이터 확인
+        </div>
+    </main>
+
+    <script src="./src/main.js?v=20260610-3"></script>
+</body>
+</html>
